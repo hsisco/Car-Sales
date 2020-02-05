@@ -1,33 +1,9 @@
-export const appReducer = (state, action) => {
-  switch(action.type) {
-
-    case "ADD_FEATURE":
-      return {
-        ...state,
-        item: action.payload
-      };
-
-    case "REMOVE_FEATURE":
-      return {
-
-      };
-    
-    case "BUY_ITEM":
-      return{
-
-      };
-
-    default:
-      return state;
-};
-
 export const initialState = {
   additionalPrice: 0,
   car: 
   {
     price: 26395,
     name: '2019 Ford Mustang',
-    id: Date.now(),
     image:
       'https://cdn.motor1.com/images/mgl/0AN2V/s1/2019-ford-mustang-bullitt.jpg',
     features: []
@@ -38,4 +14,37 @@ export const initialState = {
     { id: 3, name: 'Premium sound system', price: 500 },
     { id: 4, name: 'Rear spoiler', price: 250 }
   ]
+};
+
+export const appReducer = (state = initialState, action) => {
+  switch(action.type) {
+
+    case "ADD_FEATURE":
+      return {
+        ...state,
+        additionalPrice: state.additionalPrice + action.payload.price,
+        car: {
+          ...state.car,
+          features: [...state.car.features, action.payload]
+        }
+      };
+
+    case "REMOVE_FEATURE":
+      const featuresFiltered =  state.car.features.filter(
+        item => item.id !== action.payload.id
+      )
+      return {
+        ...state,
+        additionalPrice: state.additionalPrice - action.payload.price,
+        car: {...state.car, features, featuresFiltered}
+      };
+    
+    case "BUY_ITEM":
+      return{
+
+      };
+
+    default:
+      return state;
+  }
 };
