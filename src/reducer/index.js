@@ -36,7 +36,7 @@ export const appReducer = (state = initialState, action) => {
       return {
         ...state,
         additionalPrice: state.additionalPrice - action.payload.price,
-        car: {...state.car, features, featuresFiltered}
+        car: {...state.car.features, featuresFiltered}
       };
     
     case "BUY_ITEM":
